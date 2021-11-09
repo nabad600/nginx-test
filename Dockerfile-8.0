@@ -5,6 +5,7 @@ ARG BUILD_DATE
 ARG VCS_REF
 
 LABEL org.opencontainers.image.url="https://github.com/nabad600"
+LABEL org.opencontainers.image.description DESCRIPTION
 LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.vcs-url="https://github.com/phpearth/docker-php.git" \
       org.label-schema.vcs-ref=$VCS_REF \
