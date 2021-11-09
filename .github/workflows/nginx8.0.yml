@@ -34,7 +34,7 @@ jobs:
         run: echo "${{ secrets.GITHUB_TOKEN}}" | docker login https://ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Build Container image
-        run: docker buildx build . --file Dockerfile-8.0 --platforms=${{ steps.qemu.outputs.platforms }}  --tag $IMAGE_NAME
+        run: docker buildx build . --file Dockerfile-8.0 --platform=${{ steps.qemu.outputs.platforms }}  --tag $IMAGE_NAME
 
 #       - name: Build and push
 #         id: docker_build
