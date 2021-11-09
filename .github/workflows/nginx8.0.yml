@@ -33,6 +33,9 @@ jobs:
       - name: log into GitHub Container Registry
         run: echo "${{ secrets.GITHUB_TOKEN}}" | docker login https://ghcr.io -u ${{ github.actor }} --password-stdin
 
+      - name: Build Container image
+       run: docker build . --file Dockerfile-8.0 --platforms=${{ steps.qemu.outputs.platforms }}  --tag $IMAGE_NAME
+
       - name: Build and push
         id: docker_build
         uses: actions/checkout@v2
@@ -46,8 +49,7 @@ jobs:
           build-args: ${{ steps.metadata.outputs.args }}
           labels: ${{ steps.metadata.outputs.labels }}
           
-      #- name: Build Container image
-      #  run: docker build . --file Dockerfile-8.0 --tag $IMAGE_NAME
+      
         
       # - name: log into GitHub Container Registry
       #   run: echo "${{ secrets.GITHUB_TOKEN}}" | docker login https://ghcr.io -u ${{ github.actor }} --password-stdin
@@ -59,11 +61,11 @@ jobs:
       #       echo VERSION=$VERSION
       #       docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
       #       docker push $IMAGE_ID:$VERSION
-        run: |
-            IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
-            echo IMAGE_ID=$IMAGE_ID
-            echo VERSION=$VERSION
-            docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-            docker tag $IMAGE_NAME $IMAGE_NAME:${{ github.run_id }}
-            docker push $IMAGE_ID:$VERSION
+        # run: |
+        #     IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
+        #     echo IMAGE_ID=$IMAGE_ID
+        #     echo VERSION=$VERSION
+        #     docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
+        #     docker tag $IMAGE_NAME $IMAGE_NAME:${{ github.run_id }}
+        #     docker push $IMAGE_ID:$VERSION
 
